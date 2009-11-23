@@ -1,13 +1,20 @@
 package com.isitchristmas.android;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.text.format.Time;
 
-public class Christmas extends Activity {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-    }
+public class Christmas {
+
+	public static boolean isIt() {
+		Time now = new Time();
+		now.set(System.currentTimeMillis());
+		return isIt(now);
+	}
+	
+	public static boolean isIt(Time time) {
+		return false;
+	}
+	
+	public static String yes() {
+		return "YES";
+	}
 }
