@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="default_yes">YES</string>
+	<string name="canada_yes">YES/OUI</string>
+	<string name="ar_yes">NAAM</string>
+	<string name="cs_yes">ANO</string>
+	<string name="da_yes">JA</string>
+	<string name="de_yes">JA</string>
+	<string name="el_yes">NE</string>
+	<string name="en_yes">YES</string>
+	<string name="es_yes">SÍ</string>
+	<string name="fi_yes">KYLLÄ</string>
+	<string name="fr_yes">OUI</string>
+	<string name="iw_yes">KEN</string>
+	<string name="hr_yes">DA</string>
+	<string name="hu_yes">IGEN</string>
+	<string name="in_yes">YA</string>
+	<string name="it_yes">SÌ</string>
+	<string name="ko_yes">YE</string>
+	<string name="nb_yes">JA</string>
+	<string name="nl_yes">JA</string>
+	<string name="pl_yes">TAK</string>
+	<string name="pt_yes">SIM</string>
+	<string name="ro_yes">DA</string>
+	<string name="ru_yes">ДА</string>
+	<string name="sk_yes">ÁNO</string>
+	<string name="sv_yes">JA</string>
+	<string name="th_yes">CHAI</string>
+	<string name="tr_yes">EVET</string>
+	<string name="uk_yes">TAK</string>
+	<string name="zh_yes">SHI</string>
+	<string name="sr_yes">DA</string>
+</resources>

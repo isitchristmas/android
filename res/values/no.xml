@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="default_no">NO</string>
+	<string name="canada_no">NO/NON</string>
+	<string name="ar_no">LAY</string>
+	<string name="cs_no">NE</string>
+	<string name="da_no">NEJ</string>
+	<string name="de_no">NEIN</string>
+	<string name="el_no">OHI</string>
+	<string name="en_no">NO</string>
+	<string name="es_no">NO</string>
+	<string name="fi_no">EI</string>
+	<string name="fr_no">NON</string>
+	<string name="iw_no">LO</string>
+	<string name="hr_no">NE</string>
+	<string name="hu_no">NEM</string>
+	<string name="in_no">TIDAK</string>
+	<string name="it_no">NO</string>
+	<string name="ko_no">ANIYO</string>
+	<string name="nb_no">NEI</string>
+	<string name="nl_no">NEE</string>
+	<string name="pl_no">NIE</string>
+	<string name="pt_no">NÃO</string>
+	<string name="ro_no">NU</string>
+	<string name="ru_no">НЕТ</string>
+	<string name="sk_no">NIE</string>
+	<string name="sv_no">NEJ</string>
+	<string name="th_no">MAI CHAI</string>
+	<string name="tr_no">HAYIR</string>
+	<string name="uk_no">NI</string>
+	<string name="zh_no">BÙ SHÌ</string>
+	<string name="sr_no">NE</string>
+</resources>
