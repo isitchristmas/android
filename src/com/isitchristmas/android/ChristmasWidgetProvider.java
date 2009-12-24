@@ -29,8 +29,8 @@ public class ChristmasWidgetProvider extends AppWidgetProvider {
 	
 	@Override
 	public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
-//		if (!alarmSet)
-//			setAlarm(context);
+		if (!alarmSet)
+			setAlarm(context);
 		
 		int answerId = Christmas.answer(Christmas.isIt(), Locale.getDefault());
         String answer = context.getResources().getString(answerId);
