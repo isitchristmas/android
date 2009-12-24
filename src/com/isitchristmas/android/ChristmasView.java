@@ -4,19 +4,44 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.TextView;
 
 public class ChristmasView extends Activity {
-    /** Called when the activity is first created. */
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
         isItChristmas();
+        setAlarm();
     }
     
     public void isItChristmas() {
     	((TextView) findViewById(R.id.answer)).setText(Christmas.answer(Christmas.isIt(), Locale.getDefault()));
+    }
+    
+    final Handler handler = new Handler();
+    final Runnable updater = new Runnable() {
+    	public void run() {
+    		isItChristmas();
+    	}
+    };
+    
+    public void setAlarm() {
+    	Thread alarm = new Thread() {
+    		public void run() {
+    			long untilChristmas = Christmas.time() - System.currentTimeMillis();
+    			
+    			try {
+    				sleep(untilChristmas);
+    			} catch(InterruptedException e) {
+    				// well, I never
+    			}
+    			handler.post(updater);
+    		};
+    	};
+    	alarm.start();
     }
 }
