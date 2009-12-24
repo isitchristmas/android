@@ -21,6 +21,10 @@
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/christmas_widget_provider_info" />
 		</receiver>
+		
+		<receiver
+			android:name=".ChristmasReceiver"
+			/>
     </application>
     <uses-sdk 
     	android:minSdkVersion="3"

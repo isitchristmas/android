@@ -6,6 +6,9 @@ import android.text.format.Time;
 
 public class Christmas {
 
+	public static final int MONTH = 11;
+	public static final int DAY = 25;
+	
 	public static int answer(boolean isIt, Locale locale) {
 		return isIt ? yes(locale) : no(locale); 
 	}
@@ -13,20 +16,20 @@ public class Christmas {
 	public static boolean isIt() {
 		Time now = new Time();
 		now.set(System.currentTimeMillis());
-		return now.month == 11 && now.monthDay == 25;
+		return now.month == MONTH && now.monthDay == DAY;
 	}
 	
-	// returns the epoch-based time of the next Christmas, in milliseconds
+	// returns the epoch-based time of the next Christmas, at midnight, in milliseconds
 	public static long time() {
 		Time now = new Time();
 		now.setToNow();
 		int thisYear = now.year;
 		
 		Time christmas = new Time();
-		christmas.set(25, 11, thisYear);
+		christmas.set(DAY, MONTH, thisYear);
 		
 		if (System.currentTimeMillis() > christmas.toMillis(false))
-			christmas.set(25, 11, thisYear + 1);
+			christmas.set(DAY, MONTH, thisYear + 1);
 		
 		return christmas.toMillis(false);
 	}
