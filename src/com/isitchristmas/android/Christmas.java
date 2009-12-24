@@ -16,6 +16,21 @@ public class Christmas {
 		return now.month == 11 && now.monthDay == 25;
 	}
 	
+	// returns the epoch-based time of the next Christmas, in milliseconds
+	public static long time() {
+		Time now = new Time();
+		now.setToNow();
+		int thisYear = now.year;
+		
+		Time christmas = new Time();
+		christmas.set(25, 11, thisYear);
+		
+		if (System.currentTimeMillis() > christmas.toMillis(false))
+			christmas.set(25, 11, thisYear + 1);
+		
+		return christmas.toMillis(false);
+	}
+	
 	public static int yes(Locale locale) {
 		String country = locale.getCountry();
 		String language = locale.getLanguage();
