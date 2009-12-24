@@ -22,6 +22,10 @@ public class ChristmasReceiver extends BroadcastReceiver {
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		/* Essentially gambling here that the widgets can all be updated within the few seconds
+		 * that a BroadcastReceiver has to work with. If someone has like 1000 widgets somehow, then they 
+		 * might conceivably see an ANR, and maybe I should have made a Service. I'm okay with that.
+		 */
 		int answerId = Christmas.answer(Christmas.isIt(), Locale.getDefault());
 		String answer = context.getResources().getString(answerId);
         
