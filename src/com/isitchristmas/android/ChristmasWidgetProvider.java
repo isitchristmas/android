@@ -13,25 +13,19 @@ import android.widget.RemoteViews;
 
 public class ChristmasWidgetProvider extends AppWidgetProvider {
 
-	/** 
-	 * This flag is here solely for people who installed the app before the Christmas timer
-	 * was added, so that the onUpdate method can also set the alarm if onEnabled was never
-	 * called between now and Christmas.  Anyone who installs the updated app on Christmas Eve,
-	 * with a widget already on their desktop, and who never reboots their phone before Christmas
-	 * hits at midnight, will depend on this flag for that alarm to get initially set.
-	 */
-	public static boolean alarmSet = false;
-	
 	@Override
 	public void onEnabled(Context context) {
-		setAlarm(context);
+		long christmasTime = Christmas.time();
+		
+		Intent receiver = new Intent(context, ChristmasReceiver.class);
+		PendingIntent christmas = PendingIntent.getBroadcast(context, 0, receiver, 0);
+		
+		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		manager.set(AlarmManager.RTC, christmasTime, christmas);
 	}
 	
 	@Override
-	public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {
-		if (!alarmSet)
-			setAlarm(context);
-		
+	public void onUpdate(Context context, AppWidgetManager manager, int[] appWidgetIds) {		
 		int answerId = Christmas.answer(Christmas.isIt(), Locale.getDefault());
         String answer = context.getResources().getString(answerId);
 		
@@ -42,18 +36,6 @@ public class ChristmasWidgetProvider extends AppWidgetProvider {
             RemoteViews views = buildView(context, answer);
             manager.updateAppWidget(appWidgetId, views);
         }
-	}
-	
-	public void setAlarm(Context context) {
-		long christmasTime = Christmas.time();
-		
-		Intent receiver = new Intent(context, ChristmasReceiver.class);
-		PendingIntent christmas = PendingIntent.getBroadcast(context, 0, receiver, 0);
-		
-		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		manager.set(AlarmManager.RTC, christmasTime, christmas);
-		
-		alarmSet = true;
 	}
 	
 	public static RemoteViews buildView(Context context, String answer) {
