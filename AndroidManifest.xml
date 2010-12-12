@@ -23,7 +23,7 @@
 		</receiver>
 		
 		<receiver
-			android:name=".ChristmasReceiver"
+			android:name=".ChristmasWidgetReceiver"
 			/>
     </application>
     <uses-sdk 

@@ -17,7 +17,7 @@ public class ChristmasWidgetProvider extends AppWidgetProvider {
 	public void onEnabled(Context context) {
 		long christmasTime = Christmas.time();
 		
-		Intent receiver = new Intent(context, ChristmasReceiver.class);
+		Intent receiver = new Intent(context, ChristmasWidgetReceiver.class);
 		PendingIntent christmas = PendingIntent.getBroadcast(context, 0, receiver, 0);
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

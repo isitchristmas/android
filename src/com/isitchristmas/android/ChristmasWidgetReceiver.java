@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-public class ChristmasReceiver extends BroadcastReceiver {
+public class ChristmasWidgetReceiver extends BroadcastReceiver {
 
 	/**
 	 * This receiver runs only on Christmas, at midnight.
