@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 import android.widget.TextView;
 
 public class ChristmasView extends Activity {
@@ -12,6 +13,7 @@ public class ChristmasView extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
         
         isItChristmas();

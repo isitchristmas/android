@@ -17,8 +17,8 @@ public class ChristmasReceiver extends BroadcastReceiver {
 	 * It is meant to handle the case where a widget has already been added prior to Christmas,
 	 * and to make it so that the widget updates precisely at midnight for the avid watcher.
 	 * 
-	 * If a widget is added on Christmas day, presumably sometime after midnight, the correct answer 
-	 * will be set in the ChristmasWidgetProvider's onUpdate method. 
+	 * If a widget is added on Christmas day, the correct answer will be set in the 
+	 * ChristmasWidgetProvider's onUpdate method. 
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
