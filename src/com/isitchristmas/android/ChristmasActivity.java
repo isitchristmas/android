@@ -3,12 +3,13 @@ package com.isitchristmas.android;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.widget.TextView;
 
-public class ChristmasView extends Activity {
+public class ChristmasActivity extends Activity {
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -16,8 +17,11 @@ public class ChristmasView extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
         
-        isItChristmas();
-        setAlarm();
+        isItChristmas(); // set the answer now
+        setAlarm(); // so it updates while the user is watching on Christmas
+        
+        // launch notification now (debug)
+        // this.sendBroadcast(new Intent(this, ChristmasNotificationReceiver.class));
     }
     
     public void isItChristmas() {
