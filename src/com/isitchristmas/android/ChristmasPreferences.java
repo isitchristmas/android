@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 public class ChristmasPreferences extends PreferenceActivity {
+	String beginningInterval = null;
 	
 	public static final String SINGLE_ENABLED_KEY = "notify_single_enable";
 	public static final boolean SINGLE_ENABLED_DEFAULT = true;
@@ -36,7 +38,9 @@ public class ChristmasPreferences extends PreferenceActivity {
 	}
 		
 	public void setupControls() {
-		updateIntervalSummary(PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT));
+		beginningInterval = PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT);
+		
+		updateIntervalSummary(beginningInterval);
 		updateRingtoneSummary(PreferenceManager.getDefaultSharedPreferences(this).getString(RINGTONE_KEY, null));
 		
 		// schedule/cancel single Christmas alarm based on whether preference is checked
@@ -46,7 +50,7 @@ public class ChristmasPreferences extends PreferenceActivity {
 				boolean value = ((Boolean) newValue).booleanValue();
 				if (value) {
 					long time = ChristmasAlarm.setChristmasAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Scheduled single Christmas alarm for " + time);
+					Log.d(Christmas.TAG, "Scheduled single Christmas alarm for " + formatTime(time));
 				} else {
 					ChristmasAlarm.cancelChristmasAlarm(ChristmasPreferences.this);
 					Log.d(Christmas.TAG, "Canceled single Christmas alarm");
@@ -62,7 +66,7 @@ public class ChristmasPreferences extends PreferenceActivity {
 				boolean value = ((Boolean) newValue).booleanValue();
 				if (value) {
 					long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Scheduled recurring Christmas alarm for " + time);
+					Log.d(Christmas.TAG, "Scheduled recurring Christmas alarm for " + formatTime(time));
 				} else {
 					ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
 					Log.d(Christmas.TAG, "Canceled recurring Christmas alarm");
@@ -75,10 +79,16 @@ public class ChristmasPreferences extends PreferenceActivity {
 		findPreference(RECURRING_INTERVAL_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
-				long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
-				Log.d(Christmas.TAG, "Interval changed, rescheduled recurring Christmas alarm for " + time);
-				
+				String value = (String) newValue;
+				if (!value.equals(beginningInterval)) {
+					ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
+					long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this, value);
+					Log.d(Christmas.TAG, "Interval changed, rescheduled recurring Christmas alarm for " + formatTime(time));
+					
+					updateIntervalSummary((String) newValue);
+					
+					beginningInterval = value;
+				}
 				return true;
 			}
 		});
@@ -86,14 +96,6 @@ public class ChristmasPreferences extends PreferenceActivity {
 		findPreference(RINGTONE_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				updateRingtoneSummary((String) newValue);
-				return true;
-			}
-		});
-		
-		findPreference(RECURRING_INTERVAL_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				updateIntervalSummary((String) newValue);
 				return true;
 			}
 		});
@@ -123,6 +125,10 @@ public class ChristmasPreferences extends PreferenceActivity {
 				return names[i];
 		}
 		return null;
+	}
+	
+	private String formatTime(long time) {
+		return time + " (" + DateFormat.format("MM-dd-yyyy hh:mm:ss", time) + ")";
 	}
 	
 }

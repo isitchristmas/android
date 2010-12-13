@@ -38,8 +38,12 @@ public class ChristmasAlarm {
 	}
 	
 	public static long setRecurringAlarm(Context context) {
-		long time = firstRecurringTime(context);
-		long interval = getIntervalMillis(context);
+		return setRecurringAlarm(context, getInterval(context));
+	}
+	
+	public static long setRecurringAlarm(Context context, String intervalValue) {
+		long time = firstRecurringTime(intervalValue);
+		long interval = getIntervalMillis(intervalValue);
 		
 		if (time < 0 || interval < 0) {
 			Log.i(Christmas.TAG, "Invalid value for recurring notification interval, no recurring notifications were scheduled");
@@ -79,8 +83,7 @@ public class ChristmasAlarm {
 		return PendingIntent.getBroadcast(context, 0, intent, 0);
 	}
 	
-	private static long firstRecurringTime(Context context) {
-		String interval = getInterval(context);
+	private static long firstRecurringTime(String interval) {
 		if (interval.equals("daily"))
 			return nextNoon();
 		else if (interval.equals("fifteen"))
@@ -93,8 +96,7 @@ public class ChristmasAlarm {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(ChristmasPreferences.RECURRING_INTERVAL_KEY, ChristmasPreferences.RECURRING_INTERVAL_DEFAULT);
 	}
 	
-	private static long getIntervalMillis(Context context) {
-		String interval = getInterval(context);
+	private static long getIntervalMillis(String interval) {
 		if (interval.equals("daily"))
 			return (24 * 60 * 60 * 1000);
 		else if (interval.equals("fifteen"))
