@@ -29,7 +29,7 @@ public class ChristmasNotificationReceiver extends BroadcastReceiver {
 	}
 	
 	private Notification getNotification(String title, String answer, Context context) {
-		int icon = R.drawable.icon;
+		int icon = R.drawable.notification;
 		long when = System.currentTimeMillis();
 		
 		Notification notification = new Notification(icon, answer, when);
