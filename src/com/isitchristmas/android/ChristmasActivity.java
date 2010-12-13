@@ -22,9 +22,6 @@ public class ChristmasActivity extends Activity {
         isItChristmas(); // set the answer now
         setAlarm(); // so it updates while the user is watching on Christmas
         
-        // launch notification now (debug)
-        // this.sendBroadcast(new Intent(this, ChristmasNotificationReceiver.class));
-        
         ChristmasUtils.setAlarms(this);
     }
     
