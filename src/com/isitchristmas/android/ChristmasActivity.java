@@ -22,6 +22,9 @@ public class ChristmasActivity extends Activity {
         
         // launch notification now (debug)
         // this.sendBroadcast(new Intent(this, ChristmasNotificationReceiver.class));
+        
+        if (!ChristmasUtils.alarmsInitialized(this))
+        	ChristmasUtils.initializeAlarms(this);
     }
     
     public void isItChristmas() {
