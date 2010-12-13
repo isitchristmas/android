@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+		<CheckBoxPreference android:key="notify_single_enable"
+			android:title="@string/notify_single_enable"
+			
+			android:summaryOn="@string/notify_single_enable_summary_on"
+			android:summaryOff="@string/notify_single_enable_summary_off"
+			
+			android:defaultValue="true"
+			/>
+          
+<!--		<CheckBoxPreference android:key="notify_recurring_enable"-->
+<!--			android:title="@string/notify_recurring_enable"-->
+<!--			-->
+<!--			android:summaryOn="@string/notify_recurring_enable_summary_on"-->
+<!--			android:summaryOff="@string/notify_recurring_enable_summary_off"-->
+<!--			-->
+<!--			android:defaultValue="true"-->
+<!--			/>-->
+<!--		-->
+<!--		<ListPreference android:key="notify_recurring_interval"-->
+<!--			android:title="@string/notify_recurring_interval"-->
+<!--			-->
+<!--			android:entries="@array/notify_recurring_interval_names"-->
+<!--			android:entryValues="@array/notify_recurring_interval_values"-->
+<!--			-->
+<!--			android:dependency="notify_recurring_enable"-->
+<!--			-->
+<!--			android:defaultValue="86400000"-->
+<!--			/>-->
+			
+		<CheckBoxPreference android:key="notify_vibrate"
+			android:title="@string/notify_vibrate"
+			
+			android:summaryOn="@string/notify_vibrate_summary_on"
+			android:summaryOff="@string/notify_vibrate_summary_off"
+			
+			android:defaultValue="true"
+			/>
+		
+		<RingtonePreference android:key="notify_ringtone"
+			android:title="@string/notify_ringtone"
+			
+			android:ringtoneType="notification"
+			android:showDefault="true"
+			android:showSilent="true"
+			/>
+		
+</PreferenceScreen>

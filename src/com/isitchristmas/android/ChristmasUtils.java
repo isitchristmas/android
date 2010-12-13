@@ -18,11 +18,23 @@ public class ChristmasUtils {
 		long time = Christmas.time();
 		
 		// debug, 3 seconds from execution
-		// time = System.currentTimeMillis() + 3000;
+		// time = System.currentTimeMillis() + 1000;
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, new Intent(context, ChristmasNotificationReceiver.class), 0);
+		PendingIntent alarmIntent = singleAlarmIntent(context);
 	    manager.cancel(alarmIntent);
+	    
 	    manager.set(AlarmManager.RTC_WAKEUP, time, alarmIntent);
+	}
+	
+	public static void cancelChristmasAlarm(Context context) {
+		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		PendingIntent alarmIntent = singleAlarmIntent(context);
+	    manager.cancel(alarmIntent);
+	}
+	
+	
+	private static PendingIntent singleAlarmIntent(Context context) {
+		return PendingIntent.getBroadcast(context, 0, new Intent(context, ChristmasNotificationReceiver.class), 0);
 	}
 }

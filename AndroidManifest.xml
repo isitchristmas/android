@@ -15,6 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".ChristmasPreferences" />
 
 		<receiver 
 			android:name=".ChristmasWidgetProvider"
@@ -35,9 +37,12 @@
 			/>
 			
     </application>
+    
+    <uses-permission android:name="android.permission.VIBRATE" />
+    
     <uses-sdk 
     	android:minSdkVersion="3"
     	android:targetSdkVersion="4" 
-    />
+    	/>
 
 </manifest>

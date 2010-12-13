@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -40,14 +42,14 @@ public class ChristmasNotificationReceiver extends BroadcastReceiver {
 		notification.contentView = buildView(context, answer);
 		
 		// Attach notification sound if the user picked one (defaults to silent)
-//		String ringtone = PreferenceManager.getDefaultSharedPreferences(context).getString(NotificationSettings.KEY_NOTIFY_RINGTONE, NotificationSettings.DEFAULT_NOTIFY_RINGTONE);
-//		if (ringtone != null)
-//			notification.sound = Uri.parse(ringtone);
+		String ringtone = PreferenceManager.getDefaultSharedPreferences(context).getString(ChristmasPreferences.RINGTONE_KEY, ChristmasPreferences.RINGTONE_DEFAULT);
+		if (ringtone != null)
+			notification.sound = Uri.parse(ringtone);
 		
-//		// Vibrate unless user disabled it
-//		boolean vibration = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(NotificationSettings.KEY_NOTIFY_VIBRATION, NotificationSettings.DEFAULT_NOTIFY_VIBRATION);
-//		if (vibration)
-//			notification.defaults |= Notification.DEFAULT_VIBRATE;
+		// Vibrate unless user disabled it
+		boolean vibration = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(ChristmasPreferences.VIBRATE_KEY, ChristmasPreferences.VIBRATE_DEFAULT);
+		if (vibration)
+			notification.defaults |= Notification.DEFAULT_VIBRATE;
 		
 		// always show the light
 		notification.ledARGB = 0xffffffff;

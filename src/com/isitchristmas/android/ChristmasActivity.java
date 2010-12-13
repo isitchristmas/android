@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -52,4 +54,21 @@ public class ChristmasActivity extends Activity {
     	};
     	alarm.start();
     }
+    
+    @Override 
+	public boolean onCreateOptionsMenu(Menu menu) { 
+		super.onCreateOptionsMenu(menu); 
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) { 
+		case R.id.preferences:
+			startActivity(new Intent(this, ChristmasPreferences.class));
+			break;
+		}
+		return true;
+	}
 }
