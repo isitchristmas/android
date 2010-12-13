@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.text.format.DateFormat;
-import android.util.Log;
 
 public class ChristmasPreferences extends PreferenceActivity {
 	String beginningInterval = null;
@@ -48,13 +46,10 @@ public class ChristmasPreferences extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				boolean value = ((Boolean) newValue).booleanValue();
-				if (value) {
-					long time = ChristmasAlarm.setChristmasAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Scheduled single Christmas alarm for " + formatTime(time));
-				} else {
+				if (value)
+					ChristmasAlarm.setChristmasAlarm(ChristmasPreferences.this);
+				else
 					ChristmasAlarm.cancelChristmasAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Canceled single Christmas alarm");
-				}
 				return true;
 			}
 		});
@@ -64,13 +59,11 @@ public class ChristmasPreferences extends PreferenceActivity {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				boolean value = ((Boolean) newValue).booleanValue();
-				if (value) {
-					long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Scheduled recurring Christmas alarm for " + formatTime(time));
-				} else {
+				if (value)
+					ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
+				else
 					ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
-					Log.d(Christmas.TAG, "Canceled recurring Christmas alarm");
-				}
+				
 				return true;
 			}
 		});
@@ -82,8 +75,7 @@ public class ChristmasPreferences extends PreferenceActivity {
 				String value = (String) newValue;
 				if (!value.equals(beginningInterval)) {
 					ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
-					long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this, value);
-					Log.d(Christmas.TAG, "Interval changed, rescheduled recurring Christmas alarm for " + formatTime(time));
+					ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this, value);
 					
 					updateIntervalSummary((String) newValue);
 					
@@ -125,10 +117,6 @@ public class ChristmasPreferences extends PreferenceActivity {
 				return names[i];
 		}
 		return null;
-	}
-	
-	private String formatTime(long time) {
-		return time + " (" + DateFormat.format("MM-dd-yyyy hh:mm:ss", time) + ")";
 	}
 	
 }

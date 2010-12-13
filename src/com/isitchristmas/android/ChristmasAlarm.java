@@ -6,21 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.text.format.Time;
 import android.util.Log;
 
 public class ChristmasAlarm {
 	
-	public static void setAlarms(Context context) {
-		setChristmasAlarm(context);
-		setRecurringAlarm(context);
+	public static void setEnabledAlarms(Context context) {
+		if (singleEnabled(context))
+			setChristmasAlarm(context);
+		
+		if (recurringEnabled(context))
+			setRecurringAlarm(context);
 	}
 	
-	public static long setChristmasAlarm(Context context) {
+	public static void setChristmasAlarm(Context context) {
 		long time = Christmas.time();
 		
-		// debug, 3 seconds from execution
-		// time = System.currentTimeMillis() + 1000;
+		// debug
+		// time = System.currentTimeMillis() + 5000;
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = singleAlarmIntent(context);
@@ -28,31 +32,33 @@ public class ChristmasAlarm {
 	    
 	    manager.set(AlarmManager.RTC_WAKEUP, time, alarmIntent);
 	    
-	    return time;
+	    Log.d(Christmas.TAG, "Scheduled single Christmas alarm for " + formatTime(time));
 	}
 	
 	public static void cancelChristmasAlarm(Context context) {
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = singleAlarmIntent(context);
 	    manager.cancel(alarmIntent);
+	    
+	    Log.d(Christmas.TAG, "Canceled single Christmas alarm");
 	}
 	
-	public static long setRecurringAlarm(Context context) {
-		return setRecurringAlarm(context, getInterval(context));
+	public static void setRecurringAlarm(Context context) {
+		setRecurringAlarm(context, getInterval(context));
 	}
 	
-	public static long setRecurringAlarm(Context context, String intervalValue) {
+	public static void setRecurringAlarm(Context context, String intervalValue) {
 		long time = firstRecurringTime(intervalValue);
 		long interval = getIntervalMillis(intervalValue);
 		
 		if (time < 0 || interval < 0) {
 			Log.i(Christmas.TAG, "Invalid value for recurring notification interval, no recurring notifications were scheduled");
-			return -1;
+			return;
 		}
 		
 		// debug
-		// time = System.currentTimeMillis() + 1000;
-		// interval = 3000;
+//		time = System.currentTimeMillis() + 2000;
+//		interval = 10000;
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = recurringAlarmIntent(context);
@@ -60,13 +66,15 @@ public class ChristmasAlarm {
 		
 		manager.setRepeating(AlarmManager.RTC_WAKEUP, time, interval, alarmIntent);
 		
-		return time;
+		Log.d(Christmas.TAG, "Scheduled recurring Christmas alarm for " + formatTime(time));
 	}
 	
 	public static void cancelRecurringAlarm(Context context) {
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = recurringAlarmIntent(context);
 		manager.cancel(alarmIntent);
+		
+		Log.d(Christmas.TAG, "Canceled recurring Christmas alarm");
 	}
 	
 	// helper methods
@@ -117,5 +125,17 @@ public class ChristmasAlarm {
 			noon.set(0, 0, 12, now.monthDay    , now.month, now.year);
 		
 		return noon.toMillis(false);
+	}
+	
+	private static boolean singleEnabled(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(ChristmasPreferences.SINGLE_ENABLED_KEY, ChristmasPreferences.SINGLE_ENABLED_DEFAULT);
+	}
+	
+	private static boolean recurringEnabled(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(ChristmasPreferences.RECURRING_ENABLED_KEY, ChristmasPreferences.RECURRING_ENABLED_DEFAULT);
+	}
+	
+	private static String formatTime(long time) {
+		return time + " (" + DateFormat.format("MM-dd-yyyy hh:mm:ss", time) + ")";
 	}
 }

@@ -30,17 +30,21 @@
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/christmas_widget_provider_info" />
 		</receiver>
 		
-		<receiver
-			android:name=".ChristmasWidgetReceiver"
-			/>
-			
-		<receiver
-			android:name=".ChristmasNotificationReceiver"
-			/>
+		<receiver android:name=".ChristmasWidgetReceiver" />
+		
+		<receiver android:name=".ChristmasNotificationReceiver" />
+		
+		<receiver android:name=".ChristmasBootReceiver"
+			>
+			<intent-filter>
+        		<action android:name="android.intent.action.BOOT_COMPLETED" />
+        	</intent-filter>
+		</receiver>
 			
     </application>
     
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <uses-sdk 
     	android:minSdkVersion="3"

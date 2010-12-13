@@ -23,7 +23,7 @@ public class ChristmasActivity extends Activity {
         setLocalAlarm(); // so it updates this screen while the user is watching on Christmas
         
         // will cancel and re-schedule all alarms when the user opens the app
-        ChristmasAlarm.setAlarms(this);
+        ChristmasAlarm.setEnabledAlarms(this);
     }
     
     public void isItChristmas() {
