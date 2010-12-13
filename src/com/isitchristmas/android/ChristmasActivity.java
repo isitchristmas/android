@@ -20,8 +20,9 @@ public class ChristmasActivity extends Activity {
         setContentView(R.layout.main);
         
         isItChristmas(); // set the answer now
-        setAlarm(); // so it updates while the user is watching on Christmas
+        setLocalAlarm(); // so it updates this screen while the user is watching on Christmas
         
+        // will cancel and re-schedule all alarms when the user opens the app
         ChristmasUtils.setAlarms(this);
     }
     
@@ -36,7 +37,7 @@ public class ChristmasActivity extends Activity {
     	}
     };
     
-    public void setAlarm() {
+    public void setLocalAlarm() {
     	Thread alarm = new Thread() {
     		public void run() {
     			long untilChristmas = Christmas.time() - System.currentTimeMillis();
