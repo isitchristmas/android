@@ -6,8 +6,8 @@ import android.text.format.Time;
 
 public class Christmas {
 
-	public static final int MONTH = 11;
-	public static final int DAY = 25;
+	public static final int MONTH = 11; // 0-indexed
+	public static final int DAY = 25;   // 1-indexed
 	
 	public static int answer(boolean isIt, Locale locale) {
 		return isIt ? yes(locale) : no(locale); 
