@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ChristmasPreferences extends PreferenceActivity {
-	Preference notificationDelay;
 	
 	public static final String SINGLE_ENABLED_KEY = "notify_single_enable";
 	public static final boolean SINGLE_ENABLED_DEFAULT = true;
@@ -19,7 +18,7 @@ public class ChristmasPreferences extends PreferenceActivity {
 	public static final boolean RECURRING_ENABLED_DEFAULT = true;
 	
 	public static final String RECURRING_INTERVAL_KEY = "notify_recurring_interval";
-	public static final String RECURRING_INTERVAL_DEFAULT = "86400000"; // daily
+	public static final String RECURRING_INTERVAL_DEFAULT = "daily";
 	
 	public static final String VIBRATE_KEY = "notify_vibrate";
 	public static final boolean VIBRATE_DEFAULT = true;
@@ -38,30 +37,57 @@ public class ChristmasPreferences extends PreferenceActivity {
 	}
 		
 	public void setupControls() {
-		notificationDelay = findPreference(RECURRING_INTERVAL_KEY);
 		
 		// initially set the summary of the notification delay preference
-		String delay = PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT);
-		if (delay != null)
-			notificationDelay.setSummary(codeToName(delay));
+		String interval = PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT);
+		if (interval != null)
+			findPreference(RECURRING_INTERVAL_KEY).setSummary(codeToName(interval));
 		
 		// schedule/cancel single Christmas alarm based on whether preference is checked
-		CheckBoxPreference notifications = (CheckBoxPreference) findPreference(SINGLE_ENABLED_KEY);
-		notifications.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+		findPreference(SINGLE_ENABLED_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				boolean value = ((Boolean) newValue).booleanValue();
 				if (value) {
-					ChristmasUtils.setChristmasAlarm(ChristmasPreferences.this);
-					Log.d(ChristmasUtils.TAG, "Scheduled single Christmas alarm");
+					long time = ChristmasAlarm.setChristmasAlarm(ChristmasPreferences.this);
+					Log.d(Christmas.TAG, "Scheduled single Christmas alarm for " + time);
 				} else {
-					ChristmasUtils.cancelChristmasAlarm(ChristmasPreferences.this);
-					Log.d(ChristmasUtils.TAG, "Canceled single Christmas alarm");
+					ChristmasAlarm.cancelChristmasAlarm(ChristmasPreferences.this);
+					Log.d(Christmas.TAG, "Canceled single Christmas alarm");
 				}
 				return true;
 			}
 		});
 		
+		// schedule/cancel recurring Christmas alarm based on whether preference is checked
+		findPreference(RECURRING_ENABLED_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				boolean value = ((Boolean) newValue).booleanValue();
+				if (value) {
+					long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
+					Log.d(Christmas.TAG, "Scheduled recurring Christmas alarm for " + time);
+				} else {
+					ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
+					Log.d(Christmas.TAG, "Canceled recurring Christmas alarm");
+				}
+				return true;
+			}
+		});
+		
+		// reschedule recurring Christmas alarm when interval changes
+		findPreference(RECURRING_INTERVAL_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				ChristmasAlarm.cancelRecurringAlarm(ChristmasPreferences.this);
+				long time = ChristmasAlarm.setRecurringAlarm(ChristmasPreferences.this);
+				Log.d(Christmas.TAG, "Interval changed, rescheduled recurring Christmas alarm for " + time);
+				
+				return true;
+			}
+		});
+		
+		// keep summary of ringtone preference up to date
 		findPreference(RINGTONE_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				updateRingtoneSummary((String) newValue);
@@ -69,11 +95,11 @@ public class ChristmasPreferences extends PreferenceActivity {
 			}
 		});
 		
-		// keep the summary of the interval preference up to date
-		notificationDelay.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+		// keep summary of the interval preference up to date
+		findPreference(RECURRING_INTERVAL_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				notificationDelay.setSummary(codeToName((String) newValue));
+				findPreference(RECURRING_INTERVAL_KEY).setSummary(codeToName((String) newValue));
 				return true;
 			}
 		});

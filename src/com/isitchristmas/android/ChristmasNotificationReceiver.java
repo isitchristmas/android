@@ -25,7 +25,7 @@ public class ChristmasNotificationReceiver extends BroadcastReceiver {
 		NotificationManager notifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		notifyManager.notify(title.hashCode(), notification);
 		
-		Log.i(ChristmasUtils.TAG, "Notified of Christmas. Answer: " + answer);
+		Log.i(Christmas.TAG, "Notified of Christmas. Answer: " + answer);
 	}
 	
 	private Notification getNotification(String title, String answer, Context context) {

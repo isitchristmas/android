@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.text.format.Time;
 
 public class Christmas {
+	public static final String TAG = "IsItChristmas";
 
 	public static final int MONTH = 11; // 0-indexed
 	public static final int DAY = 25;   // 1-indexed
@@ -167,4 +168,5 @@ public class Christmas {
 		
 		return R.string.default_no;
 	}
+
 }
