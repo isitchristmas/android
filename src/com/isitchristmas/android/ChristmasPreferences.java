@@ -3,7 +3,6 @@ package com.isitchristmas.android;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -37,11 +36,8 @@ public class ChristmasPreferences extends PreferenceActivity {
 	}
 		
 	public void setupControls() {
-		
-		// initially set the summary of the notification delay preference
-		String interval = PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT);
-		if (interval != null)
-			findPreference(RECURRING_INTERVAL_KEY).setSummary(codeToName(interval));
+		updateIntervalSummary(PreferenceManager.getDefaultSharedPreferences(this).getString(RECURRING_INTERVAL_KEY, RECURRING_INTERVAL_DEFAULT));
+		updateRingtoneSummary(PreferenceManager.getDefaultSharedPreferences(this).getString(RINGTONE_KEY, null));
 		
 		// schedule/cancel single Christmas alarm based on whether preference is checked
 		findPreference(SINGLE_ENABLED_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -87,7 +83,6 @@ public class ChristmasPreferences extends PreferenceActivity {
 			}
 		});
 		
-		// keep summary of ringtone preference up to date
 		findPreference(RINGTONE_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				updateRingtoneSummary((String) newValue);
@@ -95,14 +90,17 @@ public class ChristmasPreferences extends PreferenceActivity {
 			}
 		});
 		
-		// keep summary of the interval preference up to date
 		findPreference(RECURRING_INTERVAL_KEY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				findPreference(RECURRING_INTERVAL_KEY).setSummary(codeToName((String) newValue));
+				updateIntervalSummary((String) newValue);
 				return true;
 			}
 		});
+	}
+	
+	private void updateIntervalSummary(String value) {
+		findPreference(RECURRING_INTERVAL_KEY).setSummary(codeToName(value));
 	}
 	
 	private void updateRingtoneSummary(String uri) {
