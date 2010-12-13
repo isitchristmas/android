@@ -16,7 +16,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ChristmasPreferences" />
+        <activity android:name=".ChristmasPreferences"
+        	android:label="@string/menu_preferences" 
+        	/>
 
 		<receiver 
 			android:name=".ChristmasWidgetProvider"

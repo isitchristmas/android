@@ -4,17 +4,17 @@
     
     <string name="menu_preferences">Christmas Preferences</string>
     
-    <string name="notify_single_enable">Tell me of Christmas</string>
+    <string name="notify_single_enable">Tell me on Christmas</string>
     <string name="notify_single_enable_summary_on">Midnight notification on 12/25</string>
     <string name="notify_single_enable_summary_off">No midnight notification on 12/25</string>
     
     <string name="notify_recurring_enable">Update me regularly</string>
-    <string name="notify_recurring_enable_summary_on">You will be regularly updated</string>
+    <string name="notify_recurring_enable_summary_on">You will be kept up to date</string>
     <string name="notify_recurring_enable_summary_off">You will not be kept up to date</string>
     
     <string name="notify_recurring_interval">How regularly</string>
     <string-array name="notify_recurring_interval_names">
-    	<item>Daily</item>
+    	<item>Daily at noon</item>
     </string-array>
     <string-array name="notify_recurring_interval_values">
     	<item>86400000</item>

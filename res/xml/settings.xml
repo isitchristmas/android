@@ -10,25 +10,23 @@
 			android:defaultValue="true"
 			/>
           
-<!--		<CheckBoxPreference android:key="notify_recurring_enable"-->
-<!--			android:title="@string/notify_recurring_enable"-->
-<!--			-->
-<!--			android:summaryOn="@string/notify_recurring_enable_summary_on"-->
-<!--			android:summaryOff="@string/notify_recurring_enable_summary_off"-->
-<!--			-->
-<!--			android:defaultValue="true"-->
-<!--			/>-->
-<!--		-->
-<!--		<ListPreference android:key="notify_recurring_interval"-->
-<!--			android:title="@string/notify_recurring_interval"-->
-<!--			-->
-<!--			android:entries="@array/notify_recurring_interval_names"-->
-<!--			android:entryValues="@array/notify_recurring_interval_values"-->
-<!--			-->
-<!--			android:dependency="notify_recurring_enable"-->
-<!--			-->
-<!--			android:defaultValue="86400000"-->
-<!--			/>-->
+		<CheckBoxPreference android:key="notify_recurring_enable"
+			android:title="@string/notify_recurring_enable"
+			
+			android:summaryOn="@string/notify_recurring_enable_summary_on"
+			android:summaryOff="@string/notify_recurring_enable_summary_off"
+			
+			android:defaultValue="true"
+			/>
+		
+		<ListPreference android:key="notify_recurring_interval"
+			android:title="@string/notify_recurring_interval"
+			
+			android:entries="@array/notify_recurring_interval_names"
+			android:entryValues="@array/notify_recurring_interval_values"
+			
+			android:dependency="notify_recurring_enable"
+			/>
 			
 		<CheckBoxPreference android:key="notify_vibrate"
 			android:title="@string/notify_vibrate"
